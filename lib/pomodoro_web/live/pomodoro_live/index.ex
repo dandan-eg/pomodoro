@@ -2,12 +2,13 @@ defmodule PomodoroWeb.PomodoroLive.Index do
   use PomodoroWeb, :live_view
 
   def mount(_params, _session, socket) do
-    if connected?(socket), do: schedule_reset()
+    duration = 6
+    if connected?(socket), do: schedule_reset(duration)
 
     {:ok,
      assign(socket,
        start_time: System.system_time(:second),
-       duration: 5
+       duration: duration
      )}
   end
 
@@ -19,14 +20,18 @@ defmodule PomodoroWeb.PomodoroLive.Index do
   end
 
   def handle_info(:reset, socket) do
+    duration = 4
+    schedule_reset(duration)
+
     {:noreply,
      assign(socket,
        start_time: System.system_time(:second),
-       duration: 2
+       duration: duration
      )}
   end
 
-  def schedule_reset() do
-    Process.send_after(self(), :reset, 5_000)
+  def schedule_reset(time_in_seconds) do
+    time_in_milliseconds = time_in_seconds * 1000
+    Process.send_after(self(), :reset, time_in_milliseconds)
   end
 end
