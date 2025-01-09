@@ -1,13 +1,13 @@
-export const Countdown = {
+export const Timer = {
   //Callbacks:
   mounted() {
-    this.initializeNewCountdown()
+    this.initializeNewTimer()
   },
   updated() {
-    this.initializeNewCountdown()
+    this.initializeNewTimer()
   },
   destroyed() {
-    this.clearCountdown()
+    this.clearTimer()
   },
 
 
@@ -20,9 +20,9 @@ export const Countdown = {
     return parseInt(this.el.dataset.duration, 10);
   },
 
-  initializeNewCountdown() {
+  initializeNewTimer() {
     // clear previous timer 
-    this.clearCountdown()
+    this.clearTimer()
 
     // don't wait 1000ms before the first tick
     this.tick();
@@ -39,7 +39,7 @@ export const Countdown = {
 
     this.updateTextContent(remaining);
     if (remaining <= 0) {
-      this.clearCountdown();
+      this.clearTimer();
     }
   },
 
@@ -65,7 +65,7 @@ export const Countdown = {
     this.el.textContent = formatted;
   },
 
-  clearCountdown() {
+  clearTimer() {
     if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;
