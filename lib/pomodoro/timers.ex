@@ -42,16 +42,19 @@ defmodule Pomodoro.Timers do
 
   ## Examples
 
-      iex> create_timer(%{field: value})
+      iex> create_timer()
       {:ok, %Timer{}}
 
-      iex> create_timer(%{field: bad_value})
+      iex> create_timer()
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_timer(attrs \\ %{}) do
-    %Timer{}
-    |> Timer.changeset(attrs)
+  def create_timer() do
+    %Timer{
+      duration: 10,
+      start: System.system_time(:second)
+    }
+    |> Timer.changeset(%{})
     |> Repo.insert()
   end
 
